@@ -33,9 +33,11 @@ public extension Request {
                 request.httpBody = body as? Data
             } else {
                 request.httpBody = try JSONEncoder().encode(body)
+                request.setValue("application/json", forHTTPHeaderField: "Content-Type")
             }
         } else if let bodyFields {
             request.httpBody = try JSONSerialization.data(withJSONObject: bodyFields)
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
         }
         
         if let headers {
